@@ -6,6 +6,7 @@ import React from "react";
 import Markdown from "react-markdown";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Link from "next/link";
+import DeleteButton from "../_components/DeleteButton";
 interface Props {
   params: { id: string };
 }
@@ -17,7 +18,7 @@ const IssueDetaisPage = async ({ params }: Props) => {
     notFound();
   }
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 space-x-4">
       <Heading className=" capitalize">{issue?.title}</Heading>
       <Flex gap="3" className="flex-wrap">
         <IssueStatusBadge status={issue?.status} />
@@ -35,6 +36,7 @@ const IssueDetaisPage = async ({ params }: Props) => {
           Edit Issue
         </Link>
       </Button>
+      <DeleteButton issueId={issue?.id} />
     </div>
   );
 };

@@ -34,6 +34,7 @@ const IssueFormPage = ({ issue }: { issue?: Issue }) => {
         await axios.patch("/api/issues/" + issue?.id, FormValue);
       } else await axios.post("/api/issues", FormValue);
       router.push("/issues");
+      router.refresh();
     } catch (error) {
       console.error("Error submitting form: ", error);
     } finally {
