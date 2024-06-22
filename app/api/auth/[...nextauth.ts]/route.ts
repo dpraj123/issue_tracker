@@ -7,5 +7,15 @@ export const {
   auth,
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google],
+  providers: [
+    Google({
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+  ],
 });
