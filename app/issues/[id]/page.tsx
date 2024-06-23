@@ -7,6 +7,7 @@ import Markdown from "react-markdown";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Link from "next/link";
 import DeleteButton from "../_components/DeleteButton";
+import AssigneeSelect from "@/app/components/AssigneeSelect";
 interface Props {
   params: { id: string };
 }
@@ -27,6 +28,7 @@ const IssueDetaisPage = async ({ params }: Props) => {
       <Card className="prose p-4">
         <Markdown>{issue?.description}</Markdown>
       </Card>
+      <AssigneeSelect />
       <Button>
         <Link
           href={`/issues/${issue?.id}/edit`}
