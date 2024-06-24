@@ -28,7 +28,7 @@ const IssueDetaisPage = async ({ params }: Props) => {
       <Card className="prose p-4">
         <Markdown>{issue?.description}</Markdown>
       </Card>
-      <AssigneeSelect />
+      <AssigneeSelect issue={issue} />
       <Button>
         <Link
           href={`/issues/${issue?.id}/edit`}
