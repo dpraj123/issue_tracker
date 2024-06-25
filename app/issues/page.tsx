@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import { Button, Flex, Table } from "@radix-ui/themes";
-import NextLink from "next/link";
 import Link from "next/link";
 import React from "react";
 import IssueStatusBadge from "../components/IssueStatusBadge";
@@ -8,6 +7,7 @@ import IssueStatusFilter from "./_components/IssueStatusFilter";
 import { Issue, Status } from "@prisma/client";
 import { FaArrowUp } from "react-icons/fa";
 import Pagination from "./_components/Pagination";
+import { Metadata } from "next";
 interface props {
   searchParams: { status: Status; orderBy: keyof Issue; page: string };
 }
@@ -53,7 +53,7 @@ const IssuesPage = async ({ searchParams }: props) => {
           <Link href="/issues/new">New Issue</Link>
         </Button>
       </Flex>
-      <Table.Root variant="surface">
+      <Table.Root variant="surface" size="1">
         <Table.Header>
           <Table.Row>
             {columnHeader.map((header) => (
@@ -97,4 +97,9 @@ const IssuesPage = async ({ searchParams }: props) => {
   );
 };
 
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View  all project issues",
+};
 export default IssuesPage;
