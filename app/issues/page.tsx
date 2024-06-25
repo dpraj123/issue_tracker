@@ -4,11 +4,12 @@ import NextLink from "next/link";
 import Link from "next/link";
 import React from "react";
 import IssueStatusBadge from "../components/IssueStatusBadge";
-import IssueStatusFilter from "./IssueStatusFilter";
+import IssueStatusFilter from "./_components/IssueStatusFilter";
 import { Issue, Status } from "@prisma/client";
 import { FaArrowUp } from "react-icons/fa";
+import Pagination from "./_components/Pagination";
 interface props {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; page: string };
 }
 const columnHeader: {
   label: string;
@@ -28,16 +29,26 @@ const IssuesPage = async ({ searchParams }: props) => {
     .includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined;
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
   const issueList = await prisma.issue.findMany({
     where: {
       status: status,
     },
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
+  const issueCout = await prisma.issue.count({ where: { status } });
   return (
     <div className="p-5 space-y-4 mx-auto">
       <Flex justify={"between"}>
         <IssueStatusFilter />
+        <Pagination
+          itemCount={issueCout}
+          pageSize={pageSize}
+          currentPage={page}
+        />
         <Button>
           <Link href="/issues/new">New Issue</Link>
         </Button>
@@ -50,11 +61,11 @@ const IssuesPage = async ({ searchParams }: props) => {
                 key={header.label}
                 className={`${header?.className}`}
               >
-                <NextLink
+                <Link
                   href={{ query: { ...searchParams, orderBy: header.value } }}
                 >
                   {header?.label}
-                </NextLink>
+                </Link>
                 {header.value === searchParams.orderBy && <FaArrowUp />}
               </Table.ColumnHeaderCell>
             ))}

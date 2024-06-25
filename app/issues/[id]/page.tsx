@@ -7,7 +7,7 @@ import Markdown from "react-markdown";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Link from "next/link";
 import DeleteButton from "../_components/DeleteButton";
-import AssigneeSelect from "@/app/components/AssigneeSelect";
+import AssigneeSelect from "../_components/AssigneeSelect";
 interface Props {
   params: { id: string };
 }
